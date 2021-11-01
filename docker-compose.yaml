@@ -35,7 +35,7 @@ services:
     volumes:
       - ./Downloads:/home/seluser/Downloads
   # Container
-  search-module1:
+  search-module:
     image: virenderpannu/selenium-docker
     depends_on:
       - firefox
@@ -44,20 +44,9 @@ services:
       - HUB_HOST=hub
       - MODULE=book-flight-module.xml
     volumes:
-      - ./search-result1:/usr/share/learn/test-output
+      - ./search-result:/usr/share/learn/test-output
   # Container
-  search-module2:
-    image: virenderpannu/selenium-docker
-    depends_on:
-      - chrome
-    environment:
-      - BROWSER=chrome
-      - HUB_HOST=hub
-      - MODULE=search-module.xml
-    volumes:
-      - ./search-result2:/usr/share/learn/test-output
-  # Container
-  book-flight-module1:
+  book-flight-module:
     image: virenderpannu/selenium-docker
     depends_on:
       - chrome
@@ -66,15 +55,4 @@ services:
       - HUB_HOST=hub
       - MODULE=book-flight-module.xml
     volumes:
-      - ./book-result1:/usr/share/learn/test-output
-  # Container
-  book-flight-module2:
-    image: virenderpannu/selenium-docker
-    depends_on:
-      - firefox
-    environment:
-      - BROWSER=firefox
-      - HUB_HOST=hub
-      - MODULE=book-flight-module.xml
-    volumes:
-      - ./book-result2:/usr/share/learn/test-output
+      - ./book-result:/usr/share/learn/test-output
