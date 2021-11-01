@@ -35,24 +35,24 @@ services:
     volumes:
       - ./Downloads:/home/seluser/Downloads
   # Container
-  search-module:
+  google-search-module:
     image: virenderpannu/selenium-docker
     depends_on:
       - firefox
     environment:
       - BROWSER=firefox
       - HUB_HOST=hub
-      - MODULE=book-flight-module.xml
+      - MODULE=google-search-module.xml
     volumes:
-      - ./output/search-result:/usr/share/learn/test-output
+      - ./output/google-search-result:/usr/share/learn/test-output
   # Container
-  book-flight-module:
+  duckduckgo-search-module:
     image: virenderpannu/selenium-docker
     depends_on:
       - chrome
     environment:
       - BROWSER=chrome
       - HUB_HOST=hub
-      - MODULE=book-flight-module.xml
+      - MODULE=duckduckgo-search-module.xml
     volumes:
-      - ./output/book-result:/usr/share/learn/test-output
+      - ./output/duckduckgo-search-result:/usr/share/learn/test-output
