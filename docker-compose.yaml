@@ -1,0 +1,80 @@
+version: "3"
+services:
+  # Container
+  hub:
+    image: selenium/hub:4.0.0
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+  # Container
+  chrome:
+    image: selenium/node-chrome:4.0.0
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_GRID_URL=http://localhost:4444
+      - HUB_HOST=hub
+    volumes:
+      - ./Downloads:/home/seluser/Downloads
+  # Container
+  firefox:
+    image: selenium/node-firefox:4.0.0
+    shm_size: '512mb'
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_GRID_URL=http://localhost:4444
+      - HUB_HOST=hub
+    volumes:
+      - ./Downloads:/home/seluser/Downloads
+  # Container
+  search-module1:
+    image: virenderpannu/selenium-docker
+    depends_on:
+      - firefox
+    environment:
+      - BROWSER=firefox
+      - HUB_HOST=hub
+      - MODULE=book-flight-module.xml
+    volumes:
+      - ./search-result1:/usr/share/learn/test-output
+  # Container
+  search-module2:
+    image: virenderpannu/selenium-docker
+    depends_on:
+      - chrome
+    environment:
+      - BROWSER=chrome
+      - HUB_HOST=hub
+      - MODULE=search-module.xml
+    volumes:
+      - ./search-result2:/usr/share/learn/test-output
+  # Container
+  book-flight-module1:
+    image: virenderpannu/selenium-docker
+    depends_on:
+      - chrome
+    environment:
+      - BROWSER=chrome
+      - HUB_HOST=hub
+      - MODULE=book-flight-module.xml
+    volumes:
+      - ./book-result1:/usr/share/learn/test-output
+  # Container
+  book-flight-module2:
+    image: virenderpannu/selenium-docker
+    depends_on:
+      - firefox
+    environment:
+      - BROWSER=firefox
+      - HUB_HOST=hub
+      - MODULE=book-flight-module.xml
+    volumes:
+      - ./book-result2:/usr/share/learn/test-output
