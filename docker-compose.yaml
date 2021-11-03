@@ -45,7 +45,7 @@ services:
       - MODULE=google-search-module.xml
     volumes:
       - ./output/google-search-result:/usr/share/learn/test-output
-  # Container
+  # Container - output folder will be using for the artifacts in Jenkinsfile, that will be shown on Jenkins Artifacts link on job itself
   duckduckgo-search-module:
     image: virenderpannu/selenium-docker
     depends_on:
